@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p5.js example</title>
+  <style>
+    body {
+      background-color: rgb(0, 52, 97);
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <script src="/libs/p5_js/p5.js"></script>
+  <!-- <script src="../addons/p5.sound.js"></script> -->
+  <script src="sketch.js"></script>
+  <script src="disc.js"></script>
+  <script src="ui.js"></script>
+</head>
+
+<body>
+  <main>
+  </main>
+</body>
+
+<button type="button" onclick="saveBGIMG()">Save Image</button>
+
+<div id = "controlss">
+  <input type="range" min="3" max="10" value="5" id="discsSlider" onchange="initDiscSliders()">
+</div>
+
+<div id = "controls">
+</div>
+
+</html>

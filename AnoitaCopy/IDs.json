@@ -1,0 +1,7 @@
+{
+    "0" : {"type" : "Void", "color" : [0, 0, 0], "behavior" : [0, 0, 0, 0, 0, 0, 0, 0, 0], "priority" : 1},
+    "1" : {"type" : "Bedrock", "color" : [77, 50, 18], "behavior" : [0, 0, 0, 0, 0, 0, 0, 0, 0], "priority" : 10},
+    "2" : {"type" : "Sand", "color" : [168, 135, 72], "behavior" : [0, 0, 0, 0, 0, 0, 1, 1, 1], "priority" : 6},
+    "3" : {"type" : "Water", "color" : [25, 170, 227], "behavior" : [0, 0, 0, 1, 0, 1, 1, 1, 1], "priority" : 4},
+    "4" : {"type" : "Gas", "color" : [94, 94, 94], "behavior" : [1, 1, 1, 1, 0, 1, 0, 0, 0], "priority" : 3}
+}

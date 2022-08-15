@@ -38,7 +38,6 @@ function setupMazeDisplaySettings(maze){
             abs(windowWidth - windowHeight) / 2
         ];
     }
-
 }
 
 let mazeColors;
@@ -48,7 +47,8 @@ function setupMazeColors(){
         "S": color("#e3c530"),
         "F": color("#5e4dbf"),
         "#": color("#76c1c2"),
-        "@": color("#151717")
+        "@": color("#151717"),
+        "*": color("#f55c51")
     };
 }
 

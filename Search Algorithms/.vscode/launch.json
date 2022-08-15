@@ -2,15 +2,11 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "type": "browser-preview",
-            "request": "attach",
-            "name": "Browser Preview: Attach"
-        },
-        {
-            "type": "browser-preview",
+            "name": "Attach to Chrome",
+            "url": "http://127.0.0.1:5501/",
             "request": "launch",
-            "name": "Browser Preview: Launch",
-            "url": "http://127.0.0.1:5500/"
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

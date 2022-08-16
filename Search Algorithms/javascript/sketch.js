@@ -1,6 +1,6 @@
 var mazes = [];
 var current_maze = [];
-var solved_maze;
+var solved_maze = [];
 
 function preload(){
 	mazes = loadJSON("../mazes/mazes.json");
@@ -14,15 +14,13 @@ function setup() {
 	setupMazeDisplaySettings(current_maze);
 	setupMazeColors();
 
-	solved_maze = dfs(current_maze);
-
-	for (let i = 1; i < solved_maze.length - 1; i++){
-		current_maze[solved_maze[i][0]][solved_maze[i][1]] = "*";
-	}
+	// solved_maze = visualizeSolution(dfs(current_maze), current_maze);
+	// solved_maze = visualizeSolution(bfs(current_maze), current_maze);
 }
 
 function draw() {
 	background(175);
+
 
 	displayMaze(current_maze, displayMazeSettings);
 

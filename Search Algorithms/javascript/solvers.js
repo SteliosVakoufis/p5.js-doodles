@@ -1,4 +1,3 @@
-//generator functions dont forget xd
 // Neighbour offsets
 const offsets = {
     "up": [-1, 0],
@@ -11,16 +10,25 @@ const offsets = {
 function dfs(maze){
     let start = findIndex(maze, "S"),
         finish = findIndex(maze, "F");
+
     let stack = new Stack();
     stack.push(start);
+
     let predecessors = [];
     predecessors.push([start, [null, null]]);
+
+    let visited = [];
+
     let offset_keys = Object.keys(offsets);
 
     while (!stack.is_empty){
         let current_cell = stack.pop();
         if (areEqual(current_cell, finish)){
-            return findPath(predecessors, start, finish);
+            visited = visited.filter(pos => 
+                pos.toString() != start.toString() &&
+                pos.toString() != finish.toString()
+            )
+            return [visited, findPath(predecessors, start, finish)];
             // return predecessors;
         }else{
             for (let i = 0; i < offset_keys.length; i++){
@@ -35,6 +43,7 @@ function dfs(maze){
                     !isAlreadyThere(neighbour, predecessors)
                     ){
                     predecessors.push([neighbour, current_cell]);
+                    visited.push(neighbour);
                     stack.push(neighbour);
                 }
             }
@@ -61,16 +70,25 @@ function dfs(maze){
 function bfs(maze){
     let start = findIndex(maze, "S"),
         finish = findIndex(maze, "F");
+
     let queue = new Queue();
     queue.enqueue(start);
+
     let predecessors = [];
     predecessors.push([start, [null, null]]);
+
+    let visited = [];
+
     let offset_keys = Object.keys(offsets);
 
     while (!queue.is_empty){
         let current_cell = queue.dequeue();
         if (areEqual(current_cell, finish)){
-            return findPath(predecessors, start, finish);
+            visited = visited.filter(pos => 
+                pos.toString() != start.toString() &&
+                pos.toString() != finish.toString()
+            )
+            return [visited, findPath(predecessors, start, finish)];
             // return predecessors;
         }else{
             for (let i = 0; i < offset_keys.length; i++){
@@ -85,6 +103,7 @@ function bfs(maze){
                     !isAlreadyThere(neighbour, predecessors)
                     ){
                     predecessors.push([neighbour, current_cell]);
+                    visited.push(neighbour);
                     queue.enqueue(neighbour);
                 }
             }
@@ -112,5 +131,65 @@ function bfs(maze){
 // }
 
 function aStar(maze){
-    
+    let start = findIndex(maze, "S"),
+        finish = findIndex(maze, "F");
+
+    let pQueue = new Heap();
+    pQueue.put(0, start);
+
+    let predecessors = [];
+    predecessors.push([start, [null, null]]);
+
+    let visited = [];
+
+    let offset_keys = Object.keys(offsets);
+
+    while(!pQueue.is_empty){
+        let current_cell = pQueue.get();
+        if (areEqual(current_cell, finish)){
+            visited = visited.filter(pos => 
+                pos.toString() != start.toString() &&
+                pos.toString() != finish.toString()
+            )
+            return [visited, findPath(predecessors, start, finish)];
+            // return predecessors;
+        }else{
+            for (let i = 0; i < offset_keys.length; i++){
+                let row_offset = offsets[offset_keys[i]][0];
+                let col_offset = offsets[offset_keys[i]][1];
+                let neighbour = [
+                    current_cell[0] + row_offset,
+                    current_cell[1] + col_offset
+                ];
+                if (neighbour == finish) break; // <- not sure about this one
+                if (isValidPosition(maze, neighbour) && 
+                    !isAlreadyThere(neighbour, predecessors)
+                    ){
+                    predecessors.push([neighbour, current_cell]);
+                    visited.push(neighbour);
+                    let f_value = heuristic(neighbour, start, finish);
+                    pQueue.put(f_value, neighbour);
+                }
+            }
+        }
+    }
+
+    return -1;
 }
+
+// CORRECT PREDECESSORS FOR DEFAULT MAZE --aStar--
+// {
+//     (0, 0): None, 
+//     (0, 1): (0, 0), 
+//     (1, 0): (0, 0), 
+//     (0, 2): (0, 1), 
+//     (0, 3): (0, 2), 
+//     (1, 3): (0, 3), 
+//     (2, 0): (1, 0), 
+//     (2, 3): (1, 3), 
+//     (3, 0): (2, 0), 
+//     (3, 3): (2, 3), 
+//     (2, 2): (2, 3), 
+//     (3, 1): (3, 0), 
+//     (3, 2): (3, 1)
+// }

@@ -1,5 +1,5 @@
 function setupDisplaySettings(){
-    frameRate(60);
+    frameRate(5);
     rectMode(CORNER);
     strokeWeight(1);
     stroke(255);
@@ -45,11 +45,12 @@ let mazeColors;
 
 function setupMazeColors(){
     mazeColors = {
-        "S": color("#e3c530"),
-        "F": color("#5e4dbf"),
-        "#": color("#76c1c2"),
-        "@": color("#151717"),
-        "*": color("#f55c51")
+        "S": color("#e3c530"), // START
+        "F": color("#5e4dbf"), // FINISH
+        "#": color("#76c1c2"), // FREE SPACE
+        "@": color("#151717"), // OBSTACLE
+        "*": color("#9c0702"), // SOLUTION
+        "!": color("#e38c86")  // CHECKED
     };
 }
 
@@ -128,9 +129,21 @@ function findPath(predecessors, start, finish){
         }
         result.push(current);
     }
+
+    result = result.filter(pos => 
+        pos.toString() != start.toString() &&
+        pos.toString() != finish.toString()
+    )
+
     return result.reverse();
 }
 
 function manhattanDistance(a, b){
     return abs(a[0] - b[0]) + abs(a[1], b[1]);
+}
+
+function heuristic(current_cell, start, end){
+    let g_value = manhattanDistance(start, current_cell);
+    let h_value = manhattanDistance(end, current_cell);
+    return g_value + h_value;
 }

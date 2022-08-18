@@ -27,8 +27,9 @@ function generateExperimentalMaze(size){
     for (let i = 0; i < size; i++){
         let col = []
         for (let j = 0; j < size; j++){
-            if (Math.random() * 100 < 55){
+            if (Math.random() * 100 < 15){
                 col.push("@");
+                continue;
             }
             col.push("#");
         }

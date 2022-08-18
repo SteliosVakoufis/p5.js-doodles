@@ -23,8 +23,8 @@ function dfs(maze){
         let current_cell = stack.pop();
         if (areEqual(current_cell, finish)){
             visited = visited.filter(pos => 
-                pos.toString() != start.toString() &&
-                pos.toString() != finish.toString()
+                pos.toString() !== start.toString() &&
+                pos.toString() !== finish.toString()
             )
             return [visited, findPath(predecessors, start, finish)];
             // return predecessors;
@@ -80,8 +80,8 @@ function bfs(maze){
         let current_cell = queue.dequeue();
         if (areEqual(current_cell, finish)){
             visited = visited.filter(pos => 
-                pos.toString() != start.toString() &&
-                pos.toString() != finish.toString()
+                pos.toString() !== start.toString() &&
+                pos.toString() !== finish.toString()
             )
             return [visited, findPath(predecessors, start, finish)];
             // return predecessors;
@@ -141,8 +141,8 @@ function aStar(maze){
 
         if (areEqual(current_cell, finish)){
             visited = visited.filter(pos => 
-                pos.toString() != start.toString() &&
-                pos.toString() != finish.toString()
+                pos.toString() !== start.toString() &&
+                pos.toString() !== finish.toString()
             )
             return [visited, findPath(predecessors, start, finish)];
         }else{

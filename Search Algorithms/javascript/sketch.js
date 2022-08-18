@@ -12,14 +12,13 @@ function setup() {
 	
 	setupMazeColors();
 	// current_maze = selectMaze(mazes, "maze_01");
-	current_maze = generateExperimentalMaze(15);
+	current_maze = generateExperimentalMaze(25);
 
 	setupMazeDisplaySettings(current_maze);
 
 	// solved_maze = dfs(current_maze);
 	// solved_maze = bfs(current_maze);
 	solved_maze = aStar(current_maze);
-
 }
 
 function draw() {
@@ -27,8 +26,10 @@ function draw() {
 
 	displayMaze(current_maze, displayMazeSettings);
 	if (animateSolvedMaze(solved_maze, current_maze)){
-		current_maze = generateExperimentalMaze(15);
+		current_maze = generateExperimentalMaze(25);
 		setupMazeDisplaySettings(current_maze);
+		// solved_maze = dfs(current_maze);
+		// solved_maze = bfs(current_maze);
 		solved_maze = aStar(current_maze);
 	}
 
@@ -40,12 +41,12 @@ function animateSolvedMaze(solved_maze, current_maze){
 		return true;
 	}
 
-	if (solved_maze[0].length != 0){
+	if (solved_maze[0].length !== 0){
 		let visited = solved_maze[0].shift();
 		current_maze[visited[0]][visited[1]] = "!";
 		return false;
 	}
-	else if (solved_maze[1].length != 0){
+	else if (solved_maze[1].length !== 0){
 		let visited = solved_maze[1].shift();
 		current_maze[visited[0]][visited[1]] = "*";
 		return false;

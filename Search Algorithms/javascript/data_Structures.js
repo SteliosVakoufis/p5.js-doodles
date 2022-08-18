@@ -4,7 +4,7 @@ class Stack{
     }
 
     get is_empty() {
-        return this._items.length == 0 ? true : false;
+        return this._items.length === 0 ? true : false;
     }
 
     get items(){
@@ -26,7 +26,7 @@ class Queue{
     }
 
     get is_empty() {
-        return this._elements.length == 0 ? true : false;
+        return this._elements.length === 0 ? true : false;
     }
 
     get elements(){
@@ -53,7 +53,7 @@ class Heap{
     }
 
     get is_empty(){
-        return this._elements.length == 0 ? true : false;
+        return this._elements.length === 0 ? true : false;
     }
 
     get elements(){

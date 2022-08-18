@@ -19,8 +19,6 @@ function dfs(maze){
 
     let visited = [];
 
-    let offset_keys = Object.keys(offsets);
-
     while (!stack.is_empty){
         let current_cell = stack.pop();
         if (areEqual(current_cell, finish)){
@@ -31,17 +29,16 @@ function dfs(maze){
             return [visited, findPath(predecessors, start, finish)];
             // return predecessors;
         }else{
-            for (let i = 0; i < offset_keys.length; i++){
-                let row_offset = offsets[offset_keys[i]][0];
-                let col_offset = offsets[offset_keys[i]][1];
+            for (key of Object.keys(offsets)){
+                let row_offset = offsets[key][0];
+                let col_offset = offsets[key][1];
                 let neighbour = [
                     current_cell[0] + row_offset,
                     current_cell[1] + col_offset
                 ];
-                if (neighbour == finish) break; // <- not sure about this one
-                if (isValidPosition(maze, neighbour) && 
-                    !isAlreadyThere(neighbour, predecessors)
-                    ){
+                // if (neighbour == finish) break; // <- not sure about this one
+                if (isValidPosition(maze, neighbour) &&
+                !isAlreadyThere(neighbour, predecessors)){
                     predecessors.push([neighbour, current_cell]);
                     visited.push(neighbour);
                     stack.push(neighbour);
@@ -79,8 +76,6 @@ function bfs(maze){
 
     let visited = [];
 
-    let offset_keys = Object.keys(offsets);
-
     while (!queue.is_empty){
         let current_cell = queue.dequeue();
         if (areEqual(current_cell, finish)){
@@ -91,17 +86,16 @@ function bfs(maze){
             return [visited, findPath(predecessors, start, finish)];
             // return predecessors;
         }else{
-            for (let i = 0; i < offset_keys.length; i++){
-                let row_offset = offsets[offset_keys[i]][0];
-                let col_offset = offsets[offset_keys[i]][1];
+            for (key of Object.keys(offsets)){
+                let row_offset = offsets[key][0];
+                let col_offset = offsets[key][1];
                 let neighbour = [
                     current_cell[0] + row_offset,
                     current_cell[1] + col_offset
                 ];
-                if (neighbour == finish) break; // <- not sure about this one
-                if (isValidPosition(maze, neighbour) && 
-                    !isAlreadyThere(neighbour, predecessors)
-                    ){
+                // if (neighbour == finish) break; // <- not sure about this one
+                if (isValidPosition(maze, neighbour) &&
+                !isAlreadyThere(neighbour, predecessors)){
                     predecessors.push([neighbour, current_cell]);
                     visited.push(neighbour);
                     queue.enqueue(neighbour);
@@ -135,44 +129,43 @@ function aStar(maze){
         finish = findIndex(maze, "F");
 
     let pQueue = new Heap();
-    pQueue.put(0, start);
-
+    pQueue.put(-1, start);
+    
     let predecessors = [];
     predecessors.push([start, [null, null]]);
 
     let visited = [];
 
-    let offset_keys = Object.keys(offsets);
-
     while(!pQueue.is_empty){
         let current_cell = pQueue.get();
+
         if (areEqual(current_cell, finish)){
             visited = visited.filter(pos => 
                 pos.toString() != start.toString() &&
                 pos.toString() != finish.toString()
             )
             return [visited, findPath(predecessors, start, finish)];
-            // return predecessors;
         }else{
-            for (let i = 0; i < offset_keys.length; i++){
-                let row_offset = offsets[offset_keys[i]][0];
-                let col_offset = offsets[offset_keys[i]][1];
+            for (key of Object.keys(offsets)){
+                let row_offset = offsets[key][0];
+                let col_offset = offsets[key][1];
                 let neighbour = [
                     current_cell[0] + row_offset,
                     current_cell[1] + col_offset
                 ];
-                if (neighbour == finish) break; // <- not sure about this one
-                if (isValidPosition(maze, neighbour) && 
-                    !isAlreadyThere(neighbour, predecessors)
-                    ){
+                if (isValidPosition(maze, neighbour) &&
+                !isAlreadyThere(neighbour, predecessors)){
+                    f_value = manhattanDistance(neighbour, start) +
+                    manhattanDistance(neighbour, finish);
+                    pQueue.put(f_value, neighbour);
                     predecessors.push([neighbour, current_cell]);
                     visited.push(neighbour);
-                    let f_value = heuristic(neighbour, start, finish);
-                    pQueue.put(f_value, neighbour);
                 }
             }
         }
+
     }
+
 
     return -1;
 }
@@ -192,4 +185,57 @@ function aStar(maze){
 //     (2, 2): (2, 3), 
 //     (3, 1): (3, 0), 
 //     (3, 2): (3, 1)
+// }
+
+// function aStar(maze){
+//     let start = findIndex(maze, "S"),
+//         finish = findIndex(maze, "F");
+
+//     let pQueue = new Heap();
+//     pQueue.put(0, start);
+
+//     let predecessors = [];
+//     predecessors.push([start, [null, null]]);
+
+//     let g_values = [];
+//     g_values.push([start, 0]);
+//     print(g_values);
+
+//     let visited = [];
+
+//     while(!pQueue.is_empty){
+//         let current_cell = pQueue.get();
+//         if (areEqual(current_cell, finish)){
+//             visited = visited.filter(pos => 
+//                 pos.toString() != start.toString() &&
+//                 pos.toString() != finish.toString()
+//             )
+//             return [visited, findPath(predecessors, start, finish)];
+//             // return predecessors;
+//         }else{
+//             for (key of Object.keys(offsets)){
+//                 let row_offset = offsets[key][0];
+//                 let col_offset = offsets[key][1];
+//                 let neighbour = [
+//                     current_cell[0] + row_offset,
+//                     current_cell[1] + col_offset
+//                 ];
+//                 // if (neighbour == finish) break; // <- not sure about this one
+//                 // print();
+//                 if (isValidPosition(maze, neighbour) && 
+//                     !isAlreadyThere(neighbour, g_values)
+//                     ){
+//                     let g_value = manhattanDistance(neighbour, start);
+//                     let h_value = manhattanDistance(neighbour, finish);
+//                     let f_value = g_value + h_value;
+//                     g_values.push([neighbour, g_value])
+//                     predecessors.push([neighbour, current_cell]);
+//                     visited.push(neighbour);
+//                     pQueue.put(f_value, neighbour);
+//                 }
+//             }
+//         }
+//     }
+
+//     return -1;
 // }

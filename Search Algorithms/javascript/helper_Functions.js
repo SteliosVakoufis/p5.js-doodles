@@ -1,5 +1,5 @@
 function setupDisplaySettings(){
-    frameRate(5);
+    frameRate(30);
     rectMode(CORNER);
     strokeWeight(1);
     stroke(255);
@@ -139,7 +139,8 @@ function findPath(predecessors, start, finish){
 }
 
 function manhattanDistance(a, b){
-    return abs(a[0] - b[0]) + abs(a[1], b[1]);
+    let result = abs(a[0] - b[0]) + abs(a[1] - b[1]);
+    return result;
 }
 
 function heuristic(current_cell, start, end){
